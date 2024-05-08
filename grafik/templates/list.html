@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>List User</title>
+    <style>
+        #chart {
+            max-width: 650px;
+            margin: 35px auto;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5 bg-light" style="border:1px solid; background-color:#1111; border-radius: 10px;">
+    <h1 class="m-4 text-center">Add Data<a href="{% url 'create_chart_data' %}" class="btn btn-primary">Add Image</a></h1>
+    <table class="table table-bordered">
+        <tr class="bg-info text-white text-center">
+            <th>No</th>
+            <th>Month</th>
+            <th>Target</th>
+            <th>Actual</th>
+            <th>Action</th>
+        </tr>
+        {% for chart in chart_data %}
+        <tr class="text-center">
+            <td>{{ forloop.counter }}</td>
+            <td>{{ chart.month }}</td>
+            <td>{{ chart.target_value }}</td>
+            <td>{{ chart.actual_value }}</td>
+            <td>
+                <a href="{% url 'update_chart_data' chart.id %}" class="btn btn-success">Edit</a> /
+                <a href="{% url 'delete_chart_data' chart.id %}" class="btn btn-danger">Delete</a> /
+                <a href="{% url 'view' chart.id %}" class="btn btn-primary">View</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div id="chart">
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var chartData = JSON.parse('{{ chart_data_json|escapejs }}');
+        var options = {
+            chart: {
+                height: 350,
+                type: "line",
+                stacked: false
+            },
+            dataLabels: {
+                enabled: false
+            },
+            colors: ["#247BA0", "#FF1654"],
+            series: [
+                {
+                    name: 'Actual',
+                    type: 'column',
+                    data: chartData.actual_values
+                },
+                {
+                    name: 'Target',
+                    type: 'line',
+                    data: chartData.target_values
+                }
+            ],
+            stroke: {
+                width: [4, 4]
+            },
+            xaxis: {
+                categories: chartData.months
+            },
+            yaxis: [
+                {
+                    seriesName: 'Actual',
+                    axisTicks: {
+                        show: true
+                    },
+                    axisBorder: {
+                        show: true,
+                    },
+                    title: {
+                        text: "Actual"
+                    }
+                },
+                {
+                    seriesName: 'Target',
+                    opposite: true,
+                    axisTicks: {
+                        show: true
+                    },
+                    axisBorder: {
+                        show: true,
+                    }, 
+                    title: {
+                        text: "Target"
+                    }
+                }
+            ],
+            tooltip: {
+                shared: false,
+                intersect: true,
+                x: {
+                    show: false
+                }
+            },
+            legend: {
+                horizontalAlign: "left",
+                offsetX: 40
+            }
+        };
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+</body>
+</html>
