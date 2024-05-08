@@ -43,3 +43,4 @@ def view_image(request, id):
     one_rec = Image.objects.get(id=id)
     mydict['image'] = one_rec
     return render(request, 'view_image.html', mydict)
+
