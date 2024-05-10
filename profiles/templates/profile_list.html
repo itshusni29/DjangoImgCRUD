@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head>
+<head>  
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>List User</title>
@@ -8,12 +8,11 @@
 </head>
 <body>
 <div class="container mt-5 bg-light" style="border:1px solid; background-color:#1111; border-radius: 10px;">
-    <h1 class="m-4 text-center">Add User<a href="{% url 'add' %}" class="btn btn-primary">Add Image</a></h1>
+    <h1 class="m-4 text-center">List of Users <a href="{% url 'profile_add' %}" class="btn btn-primary">Add User</a></h1>
     <table class="table table-bordered">
         <tr class="bg-info text-white text-center">
             <th>No</th>
             <th>Username</th> 
-            <th>Bio</th>
             <th>Division</th>
             <th>Department</th> 
             <th>Section</th>
@@ -33,9 +32,9 @@
             <td>{{ profile.bio }}</td>
             <td><img src="{{ profile.profile_pic.url }}" class="rounded-circle" height="70px" width="70px"></td>
             <td>
-                <a href="{% url 'edit' profile.id %}" class="btn btn-success">Edit</a> /
-                <a href="{% url 'delete' profile.id %}" class="btn btn-danger">Delete</a> /
-                <a href="{% url 'view' profile.id %}" class="btn btn-primary">View</a>
+                <a href="{% url 'profile_edit' profile.id %}" class="btn btn-success">Edit</a> /
+                <a href="{% url 'profile_delete' profile.id %}" class="btn btn-danger">Delete</a> /
+                <a href="{% url 'profile_view' profile.id %}" class="btn btn-primary">View</a>
             </td>
         </tr>
         {% endfor %}

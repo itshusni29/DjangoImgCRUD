@@ -23,7 +23,7 @@ def chart_data_list(request):
         'target_values': target_values,
     }
 
-    return render(request, 'list.html', {'chart_data': chart_data, 'chart_data_json': json.dumps(chart_data_json)})
+    return render(request, 'grafik_list.html', {'chart_data': chart_data, 'chart_data_json': json.dumps(chart_data_json)})
 
 
 
@@ -36,7 +36,7 @@ def create_chart_data(request):
             return redirect('chart_data_list')
     else:
         form = ChartDataForm()
-    return render(request, 'upload.html', {'form': form})
+    return render(request, 'grafik_upload.html', {'form': form})
 
 def update_chart_data(request, id):
     chart_data = get_object_or_404(ChartData, id=id)
@@ -47,11 +47,11 @@ def update_chart_data(request, id):
             return redirect('chart_data_list')
     else:
         form = ChartDataForm(instance=chart_data)
-    return render(request, 'edit.html', {'form': form})
+    return render(request, 'grafik_edit.html', {'form': form})
 
 def delete_chart_data(request, id):
     chart_data = get_object_or_404(ChartData, id=id)
     if request.method == 'POST':
         chart_data.delete()
         return redirect('chart_data_list')
-    return render(request, 'delete.html', {'chart_data': chart_data})
+    return render(request, 'grafik_delete.html', {'chart_data': chart_data})

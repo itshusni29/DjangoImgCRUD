@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'grafik',
-    'profiles'
+    'profiles',
+    'forms',
+    'accounts'
 ]
 
 MIDDLEWARE = [
